@@ -1,51 +1,111 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --accent: #38bdf8;
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --live: #ef4444;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
     margin: 0;
     padding: 20px;
+    display: flex;
+    justify-content: center;
 }
-.container {
-    max-width: 800px;
-    margin: 0 auto;
+
+.app-container {
+    width: 100%;
+    max-width: 500px;
 }
+
 header {
     text-align: center;
     margin-bottom: 30px;
 }
-h1 { color: #1a73e8; }
+
+h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+.date-badge {
+    background: var(--card-bg);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
 .match-card {
-    background: white;
-    border-radius: 12px;
+    background: var(--card-bg);
+    border-radius: 16px;
     padding: 20px;
     margin-bottom: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
 }
-.league-name {
-    font-size: 0.8rem;
-    color: #666;
+
+.league-info {
+    font-size: 0.75rem;
+    color: var(--text-dim);
     text-transform: uppercase;
-    margin-bottom: 5px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 8px;
 }
-.teams {
-    font-weight: bold;
-    font-size: 1.1rem;
-    flex: 2;
+
+.match-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.score {
-    background: #e8f0fe;
+
+.team {
+    flex: 1;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.team.home { text-align: right; }
+.team.away { text-align: left; }
+
+.score-box {
+    background: var(--bg-color);
     padding: 10px 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    color: #1a73e8;
-    min-width: 50px;
+    border-radius: 10px;
+    margin: 0 15px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    min-width: 60px;
     text-align: center;
+    color: var(--accent);
 }
-.status {
-    font-size: 0.8rem;
-    color: #ff9800;
-    margin-left: 15px;
+
+.status-tag {
+    font-size: 0.7rem;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 6px;
+    align-self: center;
 }
-.message { text-align: center; padding: 20px; font-weight: bold; }
+
+.status-live { background: var(--live); color: white; animation: pulse 2s infinite; }
+.status-timed { background: #334155; color: var(--text-dim); }
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.loading { text-align: center; color: var(--text-dim); margin-top: 50px; }
