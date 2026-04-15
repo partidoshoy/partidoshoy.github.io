@@ -1,4 +1,64 @@
 const API_KEY = 'c9a2c5c39b3244409e6e27b6d5716564';
+const URL = 'https://api.football-data.org/v4/matches';
+
+async function fetchFootballData() {
+    const listElement = document.getElementById('match-list');
+    const statusMsg = document.getElementById('status-message');
+
+    try {
+        const response = await fetch(URL, {
+            headers: { 'X-Auth-Token': API_KEY }
+        });
+
+        if (!response.ok) throw new Error('Error en la conexión');
+
+        const data = await response.json();
+        statusMsg.style.display = 'none';
+
+        if (data.matches.length === 0) {
+            statusMsg.innerText = "No hay partidos programados para hoy.";
+            statusMsg.style.display = 'block';
+            return;
+        }
+
+        renderMatches(data.matches);
+    } catch (error) {
+        statusMsg.innerHTML = "⚠️ Error de conexión.<br><small>Es probable que el navegador bloquee la API por seguridad (CORS).</small>";
+        console.error("Detalle:", error);
+    }
+}
+
+function renderMatches(matches) {
+    const list = document.getElementById('match-list');
+    
+    matches.forEach(match => {
+        const isLive = match.status === 'IN_PLAY' || match.status === 'PAUSED';
+        const homeScore = match.score.fullTime.home ?? 0;
+        const awayScore = match.score.fullTime.away ?? 0;
+        
+        const card = document.createElement('div');
+        card.className = 'match-card';
+        card.innerHTML = `
+            <div class="league-info">${match.competition.name}</div>
+            <div class="match-content">
+                <div class="team home">${match.homeTeam.shortName || match.homeTeam.name}</div>
+                <div class="score-box">${match.status === 'TIMED' ? 'vs' : homeScore + ' - ' + awayScore}</div>
+                <div class="team away">${match.awayTeam.shortName || match.awayTeam.name}</div>
+            </div>
+            <div class="status-tag ${isLive ? 'status-live' : 'status-timed'}">
+                ${isLive ? '• EN VIVO' : new Date(match.utcDate).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+            </div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+// Configurar fecha actual
+document.getElementById('date-badge').innerText = new Date().toLocaleDateString('es-ES', { 
+    weekday: 'long', day: 'numeric', month: 'long' 
+});
+
+fetchFootballData();const API_KEY = 'c9a2c5c39b3244409e6e27b6d5716564';
 const url = 'https://api.football-data.org/v4/matches';
 const proxyUrl = 'https://corsproxy.io/?'; // Necesario para que GitHub no bloquee la API
 
