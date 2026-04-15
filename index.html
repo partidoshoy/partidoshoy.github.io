@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Partidos de Hoy</title>
+    <title>Partidos hoy</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="app-container">
         <header>
-            <h1>⚽ Partidos de Hoy</h1>
-            <p id="current-date"></p>
+            <h1>Partidos hoy</h1>
+            <div id="date-badge" class="date-badge"></div>
         </header>
-        
-        <div id="loading" class="message">Cargando partidos...</div>
-        <div id="error" class="message" style="display: none;"></div>
-        
-        <div id="match-container">
-            </div>
+
+        <section id="match-list">
+            <div id="status-message" class="loading">Buscando encuentros...</div>
+        </section>
     </div>
     <script src="script.js"></script>
 </body>
